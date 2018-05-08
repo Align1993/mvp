@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="./js/lib/vue/dist/vue.min.js"></script>
+    <script type="text/javascript" src="./js/lib/vue-router/dist/vue-router.min.js"></script>
+</head>
+<body>
+    <div id="box">
+        <router-link to= '/home'>首页</router-link>
+        <router-link to= '/news'>新闻</router-link>
+
+       <p>
+           <router-view></router-view>
+       </p>
+    </div>
+    <script>
+
+      const Home = { template: '<h1> i am home</h1>'};
+      const News = { template: '<h1> we are news </h1>'};
+      const routes = [
+          {path: '/home', component: Home},
+          {path: '/news', component: News}
+      ]
+
+      const router = new VueRouter({
+          routes   // routes: routes
+      });
+     
+      const app = new Vue({
+          router
+      }).$mount('#box')
+    </script>
+</body>
+</html>

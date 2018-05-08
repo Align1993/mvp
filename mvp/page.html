@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="./js/lib/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+        <input type="text">
+        <button>提交</button>
+        <ul>
+
+        </ul>
+    </div>
+    <script>
+          function Page() {
+
+          }
+
+          $.extend(Page.prototype, {
+              init: function () {
+                  this.bindEvents()
+              },
+              bindEvents: function () {
+                  var $btn = $('button');
+                  $btn.on('click', $.proxy(this.handleBtnCLick, this))
+              },
+              handleBtnCLick: function () {
+                  alert('123')   
+              }
+          })
+          var page = new Page();
+          page.init();
+    </script>
+</body>
+</html>
