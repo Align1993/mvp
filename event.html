@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Event Handler Scope</title>
+</head>
+<body>
+ <form>
+ 	
+ 	<input type="text" name="username" value="liujun" onclick="alert(username.value)">
+ 	<input type="text" name="username" value="liujun" onclick="alert(document)">
+ 	<input type="text" name="username" value="liujun" onclick="alert(this)">
+ 	<input type="text" name="" id="noClick" value="liujun" onclick="null">
+ 	<input type="button" name="" value="btn" id='btn'>
+ 	<input type="button" name="" value="btn" id='btn1'>
+ </form>
+ <script type="text/javascript">
+ 	/*event load*/
+ 	window.onload = function() {
+ 		var img = document.createElement('img');
+ 		img.addEventListener('load', function(event) {
+ 			alert('image laoded');
+ 			console.log(event.target);
+ 		})
+ 		document.body.appendChild(img);
+ 		//img.src = "https://gold-cdn.xitu.io/v3/static/img/logo.a7995ad.svg";
+ 		var imgInstance = new Image;
+ 		imgInstance.onload = function() {
+ 			// alert(' loaded imgInstance')
+ 		}
+ 		imgInstance.src = "https://gold-cdn.xitu.io/v3/static/img/logo.a7995ad.svg";
+ 	}
+
+ 	var handler = function(event) {
+        switch(event.type) {
+        	case 'click':
+        	 this.value = 'click';
+        	 console.log(event.target);
+        	 console.log(event.currentTarget);
+        	 console.log(this);
+        	//alert(1);
+        	alert(event.eventPhase + ':btn on click');
+        	//event.stopPropagation();
+        	//event.stopImmediatePropagation();
+        	break;
+        	case 'mouseover':
+        	event.currentTarget.value = "mouseover";
+        	break;
+        	case 'mouseout':
+        	event.target.value = 'mouseout';
+        	break;
+        }
+ 	}
+ 	document.body.addEventListener('click', function() {
+ 		console.info(this);
+ 		alert(event.eventPhase+ ':body on addEventListener')
+ 	}, true);  // true表示捕获触发
+
+    document.getElementById('btn').onclick = handler;
+    document.getElementById('btn').onmouseover = handler;
+    document.getElementById('btn').onmouseout = handler;
+    document.body.onclick = function() {
+    //	alert(2);
+    	alert(event.eventPhase + ':body on click');
+    	console.log(event.target);
+        	 console.log(event.currentTarget);
+        	 console.log(this);
+    }
+ 	    var btn1 = document.getElementById('btn1');
+ /*	    btn1.attachEvent('onclick', function(event) {
+ 	    	alert(event.srcElement)
+ 	    	alert(this);
+ 	    });*/
+      btn1.onmouseover = function() {
+      	this.value = event.relatedTarget;
+      	console.log(event.relatedTarget);
+      }
+ </script>
+</body>
+
+</html>

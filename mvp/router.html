@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="./js/lib/vue/dist/vue.min.js"></script>
+    <script type="text/javascript" src="./js/lib/vue-router/dist/vue-router.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <router-link to= '/home'>首页</router-link>
+        <router-link to= '/home/foo'>foo</router-link>
+        <router-link to= '/home/Bar?d=1'>bar</router-link>
+       <p>
+           <router-view></router-view>
+       </p>
+    </div>
+    <script>
+
+
+      const Home = { template: '<div><h1> i am home</h1><router-view></router-view></div>' };
+      const Foo = { template: '<div>FOO {{$route.path}}</div>' };
+      const Bar = { template: '<div>BAR {{$route.path }} {{ $route.query}}</div>' };
+    //   const routes = [
+    //       {path: '/home', component: Home},
+    //       {path: '/news', component: News}
+    //   ]
+
+      const router = new VueRouter({
+    
+        routes: [
+            
+            { path: '/home', component: Home,
+              children: [
+                  { path: 'foo', component: Foo, alias: '/foo'},
+                  { path: 'Bar', component: Bar, alias: ['/Bar', 'Bar-alias'] }
+              ]
+            }
+        ]
+
+      });
+     
+      const app = new Vue({
+          router
+      }).$mount('#app')
+    </script>
+</body>
+</html>
